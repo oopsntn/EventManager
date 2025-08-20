@@ -1,0 +1,7 @@
+[
+  { "name": "Music", "description": "Live concerts and music festivals", "createdAt": "2025-01-01T08:00:00Z" },
+  { "name": "Workshop", "description": "Skill training and learning events", "createdAt": "2025-01-01T08:30:00Z" },
+  { "name": "Seminar", "description": "Educational talks and seminars", "createdAt": "2025-01-01T09:00:00Z" },
+  { "name": "Sports", "description": "Football, Basketball, Running", "createdAt": "2025-01-01T09:30:00Z" },
+  { "name": "Exhibition", "description": "Art and technology exhibitions", "createdAt": "2025-01-01T10:00:00Z" }
+]

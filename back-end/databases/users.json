@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Nguyen Van A",
+    "email": "a@example.com",
+    "password": "hashed_password_a",
+    "phone": "0901234567",
+    "avatar": "avatar_a.png",
+    "role": "user",
+    "createdAt": "2025-01-01T10:00:00Z"
+  },
+  {
+    "name": "Tran Thi B",
+    "email": "b@example.com",
+    "password": "hashed_password_b",
+    "phone": "0907654321",
+    "avatar": "avatar_b.png",
+    "role": "organizer",
+    "createdAt": "2025-01-02T12:00:00Z"
+  },
+  {
+    "name": "Le Van C",
+    "email": "c@example.com",
+    "password": "hashed_password_c",
+    "phone": "0911111111",
+    "avatar": "avatar_c.png",
+    "role": "user",
+    "createdAt": "2025-01-03T14:00:00Z"
+  },
+  {
+    "name": "Pham Thi D",
+    "email": "d@example.com",
+    "password": "hashed_password_d",
+    "phone": "0922222222",
+    "avatar": "avatar_d.png",
+    "role": "user",
+    "createdAt": "2025-01-04T16:00:00Z"
+  },
+  {
+    "name": "Hoang Van E",
+    "email": "e@example.com",
+    "password": "hashed_password_e",
+    "phone": "0933333333",
+    "avatar": "avatar_e.png",
+    "role": "organizer",
+    "createdAt": "2025-01-05T18:00:00Z"
+  }
+]

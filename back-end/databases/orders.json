@@ -1,0 +1,6 @@
+[
+  { "userId": "replace_with_userId_A", "eventId": "replace_with_eventId_music", "registrationId": "replace_with_registrationId_1", "amount": 150000, "paymentMethod": "momo", "status": "PAID", "createdAt": "2025-01-20T11:05:00Z" },
+  { "userId": "replace_with_userId_C", "eventId": "replace_with_eventId_music", "registrationId": "replace_with_registrationId_2", "amount": 150000, "paymentMethod": "vnpay", "status": "PENDING", "createdAt": "2025-01-21T11:10:00Z" },
+  { "userId": "replace_with_userId_D", "eventId": "replace_with_eventId_workshop", "registrationId": "replace_with_registrationId_3", "amount": 200000, "paymentMethod": "credit_card", "status": "PAID", "createdAt": "2025-01-22T12:10:00Z" },
+  { "userId": "replace_with_userId_A", "eventId": "replace_with_eventId_football", "registrationId": "replace_with_registrationId_4", "amount": 100000, "paymentMethod": "cash", "status": "FAILED", "createdAt": "2025-01-23T13:15:00Z" }
+]
