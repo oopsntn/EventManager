@@ -6,7 +6,6 @@
 # Build / production files
 /build
 /dist
-/front-end/build
 /back-end/build
 
 # Env files
