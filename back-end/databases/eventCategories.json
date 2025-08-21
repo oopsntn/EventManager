@@ -1,7 +1,7 @@
 [
-  { "name": "Music", "description": "Live concerts and music festivals", "createdAt": "2025-01-01T08:00:00Z" },
-  { "name": "Workshop", "description": "Skill training and learning events", "createdAt": "2025-01-01T08:30:00Z" },
-  { "name": "Seminar", "description": "Educational talks and seminars", "createdAt": "2025-01-01T09:00:00Z" },
-  { "name": "Sports", "description": "Football, Basketball, Running", "createdAt": "2025-01-01T09:30:00Z" },
-  { "name": "Exhibition", "description": "Art and technology exhibitions", "createdAt": "2025-01-01T10:00:00Z" }
+  { "_id": "64a1f0022222222222222001", "name": "Workshop", "description": "Các buổi workshop chia sẻ kiến thức" },
+  { "_id": "64a1f0022222222222222002", "name": "Seminar", "description": "Hội thảo chuyên đề" },
+  { "_id": "64a1f0022222222222222003", "name": "Competition", "description": "Cuộc thi học thuật và kỹ năng" },
+  { "_id": "64a1f0022222222222222004", "name": "Networking", "description": "Giao lưu kết nối" },
+  { "_id": "64a1f0022222222222222005", "name": "Entertainment", "description": "Sự kiện giải trí" }
 ]

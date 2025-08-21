@@ -1,6 +1,7 @@
 [
-  { "userId": "replace_with_userId_A", "eventId": "replace_with_eventId_music", "content": "Your registration for FPT Music Night is confirmed!", "status": "unread", "createdAt": "2025-01-20T11:00:00Z" },
-  { "userId": "replace_with_userId_C", "eventId": "replace_with_eventId_music", "content": "Your registration is pending approval.", "status": "unread", "createdAt": "2025-01-21T11:30:00Z" },
-  { "userId": "replace_with_userId_D", "eventId": "replace_with_eventId_workshop", "content": "See you at the Soft Skills Workshop!", "status": "read", "createdAt": "2025-01-22T13:00:00Z" },
-  { "userId": "replace_with_userId_A", "eventId": "replace_with_eventId_football", "content": "Your football team registration is pending.", "status": "unread", "createdAt": "2025-01-23T15:00:00Z" }
+  { "_id": "64a1f0044444444444444001", "userId": "64a1f0011111111111111111", "eventId": "64a1f0033333333333333001", "content": "Bạn đã đăng ký thành công Workshop NodeJS", "status": "unread" },
+  { "_id": "64a1f0044444444444444002", "userId": "64a1f0011111111111111112", "eventId": "64a1f0033333333333333003", "content": "Bạn đã đăng ký Hackathon 2025", "status": "read" },
+  { "_id": "64a1f0044444444444444003", "userId": "64a1f0011111111111111113", "eventId": "64a1f0033333333333333005", "content": "Music Festival sẽ diễn ra vào 30/09", "status": "unread" },
+  { "_id": "64a1f0044444444444444004", "userId": "64a1f0011111111111111114", "eventId": "64a1f0033333333333333002", "content": "Seminar AI sắp diễn ra, hãy chuẩn bị", "status": "unread" },
+  { "_id": "64a1f0044444444444444005", "userId": "64a1f0011111111111111115", "eventId": "64a1f0033333333333333004", "content": "Bạn là organizer cho Networking Night", "status": "read" }
 ]
