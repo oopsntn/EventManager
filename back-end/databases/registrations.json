@@ -1,7 +1,8 @@
 [
-  { "userId": "replace_with_userId_A", "eventId": "replace_with_eventId_music", "registeredAt": "2025-01-20T10:00:00Z", "status": "confirmed" },
-  { "userId": "replace_with_userId_C", "eventId": "replace_with_eventId_music", "registeredAt": "2025-01-21T11:00:00Z", "status": "pending" },
-  { "userId": "replace_with_userId_D", "eventId": "replace_with_eventId_workshop", "registeredAt": "2025-01-22T12:00:00Z", "status": "confirmed" },
-  { "userId": "replace_with_userId_A", "eventId": "replace_with_eventId_football", "registeredAt": "2025-01-23T13:00:00Z", "status": "pending" },
-  { "userId": "replace_with_userId_B", "eventId": "replace_with_eventId_ai", "registeredAt": "2025-01-24T14:00:00Z", "status": "cancelled" }
+  { "_id": "64a1f0066666666666666001", "userId": "64a1f0011111111111111111", "eventId": "64a1f0033333333333333001", "status": "confirmed" },
+  { "_id": "64a1f0066666666666666002", "userId": "64a1f0011111111111111113", "eventId": "64a1f0033333333333333003", "status": "pending" },
+  { "_id": "64a1f0066666666666666003", "userId": "64a1f0011111111111111112", "eventId": "64a1f0033333333333333004", "status": "confirmed" },
+  { "_id": "64a1f0066666666666666004", "userId": "64a1f0011111111111111114", "eventId": "64a1f0033333333333333002", "status": "cancelled" },
+  { "_id": "64a1f0066666666666666005", "userId": "64a1f0011111111111111115", "eventId": "64a1f0033333333333333005", "status": "confirmed" },
+  { "_id": "64a1f0066666666666666006", "userId": "64a1f0011111111111111113", "eventId": "64a1f0033333333333333002", "status": "confirmed" }
 ]
