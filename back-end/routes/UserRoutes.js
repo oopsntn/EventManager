@@ -5,7 +5,6 @@ const Registration = require('../models/registration');
 const Organizer = require('../models/organizer');
 const EventCategory = require('../models/eventCategory');
 const Event = require('../models/event');
-const Order = require('../models/order');
 const Notification = require('../models/notification');
 // Lấy danh sách bài viết
 router.get("/users", async (req, res) => {
