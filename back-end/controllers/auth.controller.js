@@ -121,10 +121,10 @@ exports.register = async (req, res) => {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: email,
-            subject: 'Verify your email',
-            html: `<p>Chào ${name},</p>
-                 <p>Cảm ơn vì đã bỏ thời gian đăng kí. Click vào đường link để xác nhận bạn muốn dùng cái này:</p>
-                 <a href="${verificationLink}">Verify Email</a>
+            subject: 'Xác nhận email đăng ký',
+            html: `<p>Chào ngài ${name},</p>
+                 <p>Cảm ơn ngài đã bỏ thời gian đăng ký. Click vào đường link để xác nhận ngài muốn dùng sản phẩm của chúng tôi :</p>
+                 <a href="${verificationLink}">Nhận bánh danisa</a>
                  <p>Link có 1 giờ thôi, ấn nhanh thì được.</p>`
         };
 
