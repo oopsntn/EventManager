@@ -34,7 +34,9 @@ exports.login = async (req, res) => {
         if (!isMatch) {
             return res.status(401).json({ message: "Invalid password" });
         }
-
+        if (!user.is_verified) {
+            return res.status(403).json({ message: "Email not verified" });
+        }
         // Tạo payload cho token
         const payload = {
             id: user._id,
