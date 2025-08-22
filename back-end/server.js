@@ -17,7 +17,7 @@ server.use(express.json());
 
 
 
-server.use('/api', require('./routes/UserRoutes'));
+server.use('/api', require('./routes/user.route'));
 
 server.get('/', (req, res) => {
   res.send('Backend ExpressJS chạy OK!');
