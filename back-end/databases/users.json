@@ -8,8 +8,8 @@
     "avatar": "/uploads/admin.png",
     "role": "admin",
     "is_verified": true,
-    "verify_token": null,
-    "verify_token_expiry": null,
+    "verifyToken": null,
+    "verifyTokenExpriry": null,
     "createdAt": "2025-08-22T06:00:00.000Z"
   },
   {
@@ -21,8 +21,8 @@
     "avatar": "/uploads/user.png",
     "role": "user",
     "is_verified": true,
-    "verify_token": null,
-    "verify_token_expiry": null,
+    "verifyToken": null,
+    "verifyTokenExpriry": null,
     "createdAt": "2025-08-22T06:00:00.000Z"
   },
   {
@@ -34,8 +34,8 @@
     "avatar": "/uploads/organizer.png",
     "role": "organizer",
     "is_verified": true,
-    "verify_token": null,
-    "verify_token_expiry": null,
+    "verifyToken": null,
+    "verifyTokenExpriry": null,
     "createdAt": "2025-08-22T06:00:00.000Z"
   }
 ]

@@ -19,10 +19,13 @@ mongoose.connect(`${process.env.MONGO_URL}${process.env.DBNAME}`)
   .catch((error) => {
     console.error('❌ Error connecting to MongoDB:', error);
   });
-
+server.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
+});
 // Routes
 server.use('/api/users', require('./routes/user.route'));
-
+server.use('/api/auth', require('./routes/auth.route'));
 // Route gốc
 server.get('/', (req, res) => {
   res.send('Backend ExpressJS chạy OK!');
