@@ -121,7 +121,7 @@ exports.register = async (req, res) => {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: email,
-            subject: 'Xác nhận email đăng ký',
+            subject: 'Nhận bánh danisa qua EventManager',
             html: `<p>Chào ngài ${name},</p>
                  <p>Cảm ơn ngài đã bỏ thời gian đăng ký. Click vào đường link để xác nhận ngài muốn dùng sản phẩm của chúng tôi :</p>
                  <a href="${verificationLink}">Nhận bánh danisa</a>
