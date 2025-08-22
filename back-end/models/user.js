@@ -8,6 +8,9 @@ const userSchema = new mongoose.Schema({
   phone: { type: String },
   avatar: { type: String },
   role: { type: String, enum: ["user", "organizer", "admin"], default: "user" },
+  is_verified: { type: Boolean, default: false },   
+  verify_token: { type: String },                   
+  verify_token_expiry: { type: Date },
   createdAt: { type: Date, default: Date.now }
 });
 
