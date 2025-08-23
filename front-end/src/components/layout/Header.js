@@ -10,7 +10,7 @@ function Header() {
         <Navbar bg="light" expand="lg">
             <Container>
                 <Navbar.Brand as={Link} to="/">
-                    My App
+                    🎉 EventManager
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -18,6 +18,7 @@ function Header() {
                         <Nav.Link as={Link} to="/">Trang chủ</Nav.Link>
                         {isAuthenticated && (
                             <>
+                                <Nav.Link as={Link} to="/my-events">Events của tôi</Nav.Link>
                                 <Nav.Link as={Link} to="/dashboard">Bảng điều khiển</Nav.Link>
                                 <Nav.Link as={Link} to="/profile">Hồ sơ</Nav.Link>
                             </>

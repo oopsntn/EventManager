@@ -17,6 +17,18 @@ export const AuthProvider = ({ children }) => {
         if (token && userData){
             setIsAuthenticated(true);
             setUser(JSON.parse(userData));
+        } else {
+            // Set default user for development (bypass login)
+            const defaultUser = {
+                id: '64a1f001111111111111cccc',
+                name: 'Organizer Test',
+                email: 'organizer@example.com',
+                role: 'organizer'
+            };
+            setIsAuthenticated(true);
+            setUser(defaultUser);
+            localStorage.setItem('user', JSON.stringify(defaultUser));
+            localStorage.setItem('token', 'default-token-for-development');
         }
         setLoading(false);
     }, []);
@@ -47,8 +59,6 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     }
 
-    
-
     if (loading){
         return <div>Loading...</div>;
     }
@@ -59,6 +69,7 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
+
 export const useAuth = () => {
         const context = useContext(AuthContext);
         if (!context){
