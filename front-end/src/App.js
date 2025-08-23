@@ -19,10 +19,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <PrivateRoute path="/admin" component={AdminPage} allowedRoles={['admin']} />
-        <PrivateRoute path="/organizer" component={OrganizerPage} allowedRoles={['organizer', 'admin']} />
-        <PrivateRoute path="/user" component={UserPage} allowedRoles={['user', 'organizer', 'admin']} />
-        <Route path="/acc-manage" element={<AdminDashboard />} />
+        {/* <PrivateRoute path="/admin" component={AdminPage} allowedRoles={['admin']} /> */}
+        {/* <PrivateRoute path="/organizer" component={OrganizerPage} allowedRoles={['organizer', 'admin']} /> */}
+        {/* <PrivateRoute path="/user" component={UserPage} allowedRoles={['user', 'organizer', 'admin']} /> */}
+        <PrivateRoute path="/acc-manage" element={<AdminDashboard />} />
         <Route path="/create-user" element={<CreateUserForm />} />
         <Route path="/user/:id" element={<UserDetail />} />
         <Route path="/my-events" element={<EventList />} />
