@@ -93,7 +93,6 @@ const AdminDashboard = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="Search by name, email, phone..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
