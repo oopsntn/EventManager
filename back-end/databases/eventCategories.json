@@ -1,7 +1,7 @@
 [
-  { "_id": { "$oid": "64a1f0022222222222222001" }, "name": "Workshop", "description": "Các buổi workshop chia sẻ kiến thức" },
-  { "_id": { "$oid": "64a1f0022222222222222002" }, "name": "Seminar", "description": "Hội thảo chuyên đề" },
-  { "_id": { "$oid": "64a1f0022222222222222003" }, "name": "Competition", "description": "Cuộc thi học thuật và kỹ năng" },
-  { "_id": { "$oid": "64a1f0022222222222222004" }, "name": "Networking", "description": "Giao lưu kết nối" },
-  { "_id": { "$oid": "64a1f0022222222222222005" }, "name": "Entertainment", "description": "Sự kiện giải trí" }
+  { "_id": { "$oid": "64a1f0022222222222222001" }, "name": "Workshop", "description": "Các buổi workshop chia sẻ kiến thức", "createdAt": { "$date": "2025-08-22T06:00:00Z" } },
+  { "_id": { "$oid": "64a1f0022222222222222002" }, "name": "Seminar", "description": "Hội thảo chuyên đề", "createdAt": { "$date": "2025-08-22T06:00:00Z" } },
+  { "_id": { "$oid": "64a1f0022222222222222003" }, "name": "Competition", "description": "Cuộc thi học thuật và kỹ năng", "createdAt": { "$date": "2025-08-22T06:00:00Z" } },
+  { "_id": { "$oid": "64a1f0022222222222222004" }, "name": "Networking", "description": "Giao lưu kết nối", "createdAt": { "$date": "2025-08-22T06:00:00Z" } },
+  { "_id": { "$oid": "64a1f0022222222222222005" }, "name": "Entertainment", "description": "Sự kiện giải trí", "createdAt": { "$date": "2025-08-22T06:00:00Z" } }
 ]
