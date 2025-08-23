@@ -12,6 +12,9 @@ function App() {
       <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+        <Route path="/acc-manage" element={<AdminDashboard />} />
+        <Route path="/create-user" element={<CreateUserForm />} />
+        <Route path="/user/:id" element={<UserDetail />} />
     </Routes>
     <Footer/>
     </div>
