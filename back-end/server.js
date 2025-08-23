@@ -27,7 +27,7 @@ server.use((req, res, next) => {
 server.use('/api/users', require('./routes/user.route'));
 server.use('/api/auth', require('./routes/auth.route'));
 server.use('/api/events', require('./routes/event.route'));
-
+server.use('/admin', require('./routes/admin.route'));
 // Route gốc
 server.get('/', (req, res) => {
   res.send('Backend ExpressJS chạy OK!');

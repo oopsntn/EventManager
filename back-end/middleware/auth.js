@@ -17,6 +17,7 @@ function authenticateToken(req, res, next) {
     next();
   });
 }
+
 function checkRole(roles) {
   return (req, res, next) => {
     // Kiểm tra xác thực
@@ -40,6 +41,5 @@ function checkRole(roles) {
     next();
   };
 }
-
 
 module.exports = { authenticateToken, SECRET_KEY, checkRole };
