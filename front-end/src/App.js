@@ -32,7 +32,9 @@ function App() {
         />
         <Route path="/create-user" element={<CreateUserForm />} />
         <Route path="/user/:id" element={<UserDetail />} />
-        <Route path="/my-events" element={<EventList />} />
+        <Route path="/my-events" element={<PrivateRoute allowedRoles={['organizer', 'admin']}>
+          <EventList />
+        </PrivateRoute>} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/event/:id/registrations" element={<RegistrationList />} />
       </Routes>
