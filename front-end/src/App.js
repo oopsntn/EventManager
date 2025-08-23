@@ -22,7 +22,14 @@ function App() {
         {/* <PrivateRoute path="/admin" component={AdminPage} allowedRoles={['admin']} /> */}
         {/* <PrivateRoute path="/organizer" component={OrganizerPage} allowedRoles={['organizer', 'admin']} /> */}
         {/* <PrivateRoute path="/user" component={UserPage} allowedRoles={['user', 'organizer', 'admin']} /> */}
-        <PrivateRoute path="/acc-manage" element={<AdminDashboard />} />
+        <Route
+          path="/admin/acc-manage"
+          element={
+            <PrivateRoute allowedRoles={['admin']}>
+              <AdminDashboard />
+            </PrivateRoute>
+          }
+        />
         <Route path="/create-user" element={<CreateUserForm />} />
         <Route path="/user/:id" element={<UserDetail />} />
         <Route path="/my-events" element={<EventList />} />

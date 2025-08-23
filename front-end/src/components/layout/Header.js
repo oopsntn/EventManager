@@ -19,7 +19,15 @@ function Header() {
                         {isAuthenticated && (
                             <>
                                 <Nav.Link as={Link} to="/my-events">Events của tôi</Nav.Link>
-                                <Nav.Link as={Link} to="/dashboard">Bảng điều khiển</Nav.Link>
+                                {user.role === 'admin' && (
+                                    <Nav.Link as={Link} to="/admin/acc-manage">Bảng điều khiển</Nav.Link>
+                                )}
+                                {user.role === 'organizer' && (
+                                    <Nav.Link as={Link} to="/organizer/dashboard">Bảng điều khiển Tổ chức</Nav.Link>
+                                )}
+                                {user.role === 'user' && (
+                                    <Nav.Link as={Link} to="/user/dashboard">Bảng điều khiển Người dùng</Nav.Link>
+                                )}
                                 <Nav.Link as={Link} to="/profile">Hồ sơ</Nav.Link>
                             </>
                         )}
