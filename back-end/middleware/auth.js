@@ -42,4 +42,4 @@ function checkRole(roles) {
 }
 
 
-module.exports = { authenticateToken, SECRET_KEY, checkRole, allowRoles };
+module.exports = { authenticateToken, SECRET_KEY, checkRole };
