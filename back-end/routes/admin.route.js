@@ -8,10 +8,8 @@ router.get('/getUserById/:id', adminController.getUserById);
 router.post('/create', adminController.createAccount);
 router.put('/changeRole/:id', adminController.changeRole);
 router.delete("/deleteUser/:id", adminController.deleteUser);
-
 router.get('/stats', adminController.getUserStats);
 
-router.get('/getAllEvent', adminController.getAllEvent);
 
 
 

@@ -1,7 +1,7 @@
 // middleware/auth.js
 const jwt = require("jsonwebtoken");
 
-const SECRET_KEY = process.env.SECRET_KEY; 
+const SECRET_KEY = process.env.SECRET_KEY;
 
 // Middleware xác thực token
 function authenticateToken(req, res, next) {
@@ -21,19 +21,19 @@ function checkRole(roles) {
   return (req, res, next) => {
     // Kiểm tra xác thực
     if (!req.user) {
-      return res.status(401).json({ 
-        message: "Chưa xác thực", 
-        error: "Vui lòng đăng nhập" 
+      return res.status(401).json({
+        message: "Chưa xác thực",
+        error: "Vui lòng đăng nhập",
       });
     }
 
     // Kiểm tra quyền
     if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ 
-        message: "Từ chối truy cập", 
+      return res.status(403).json({
+        message: "Từ chối truy cập",
         error: "Không đủ quyền",
         requiredRoles: roles,
-        currentRole: req.user.role
+        currentRole: req.user.role,
       });
     }
 
@@ -41,5 +41,4 @@ function checkRole(roles) {
   };
 }
 
-
-module.exports = { authenticateToken, SECRET_KEY, checkRole, allowRoles };
+module.exports = { authenticateToken, SECRET_KEY, checkRole };

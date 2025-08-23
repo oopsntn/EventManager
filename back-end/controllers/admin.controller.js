@@ -249,18 +249,4 @@ module.exports.getUserStats = async (req, res) => {
   }
 };
 
-module.exports.getAllEvent = async (req, res) => {
-  try {
-    const events = await Event.find();
 
-    res.status(200).json({
-      message: "All events fetched successfully",
-      events,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Server Error",
-      error: error.message,
-    });
-  }
-};
