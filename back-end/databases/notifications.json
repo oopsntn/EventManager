@@ -1,7 +1,7 @@
 [
-  { "_id": "64a1f0044444444444444001", "userId": "64a1f001111111111111bbbb", "eventId": "64a1f0033333333333333001", "content": "Bạn đã đăng ký thành công Workshop NodeJS", "status": "unread" },
-  { "_id": "64a1f0044444444444444002", "userId": "64a1f001111111111111bbbb", "eventId": "64a1f0033333333333333003", "content": "Bạn đã đăng ký Hackathon 2025", "status": "read" },
-  { "_id": "64a1f0044444444444444003", "userId": "64a1f001111111111111bbbb", "eventId": "64a1f0033333333333333005", "content": "Music Festival sẽ diễn ra vào 30/09", "status": "unread" },
-  { "_id": "64a1f0044444444444444004", "userId": "64a1f001111111111111bbbb", "eventId": "64a1f0033333333333333002", "content": "Seminar AI sắp diễn ra, hãy chuẩn bị", "status": "unread" },
-  { "_id": "64a1f0044444444444444005", "userId": "64a1f001111111111111bbbb", "eventId": "64a1f0033333333333333004", "content": "Bạn là organizer cho Networking Night", "status": "read" }
+  { "_id": { "$oid": "64a1f0044444444444444001" }, "userId": { "$oid": "64a1f001111111111111bbbb" }, "eventId": { "$oid": "64a1f0033333333333333001" }, "content": "Bạn đã đăng ký thành công Workshop NodeJS", "status": "unread" },
+  { "_id": { "$oid": "64a1f0044444444444444002" }, "userId": { "$oid": "64a1f001111111111111bbbb" }, "eventId": { "$oid": "64a1f0033333333333333003" }, "content": "Bạn đã đăng ký Hackathon 2025", "status": "read" },
+  { "_id": { "$oid": "64a1f0044444444444444003" }, "userId": { "$oid": "64a1f001111111111111bbbb" }, "eventId": { "$oid": "64a1f0033333333333333005" }, "content": "Music Festival sẽ diễn ra vào 30/09", "status": "unread" },
+  { "_id": { "$oid": "64a1f0044444444444444004" }, "userId": { "$oid": "64a1f001111111111111bbbb" }, "eventId": { "$oid": "64a1f0033333333333333002" }, "content": "Seminar AI sắp diễn ra, hãy chuẩn bị", "status": "unread" },
+  { "_id": { "$oid": "64a1f0044444444444444005" }, "userId": { "$oid": "64a1f001111111111111bbbb" }, "eventId": { "$oid": "64a1f0033333333333333004" }, "content": "Bạn là organizer cho Networking Night", "status": "read" }
 ]
