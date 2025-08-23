@@ -41,25 +41,5 @@ function checkRole(roles) {
   };
 }
 
-// Middleware kiểm tra nhiều role
-function allowRoles(roles) {
-  return (req, res, next) => {
-    if (!req.user) {
-      return res.status(401).json({ 
-        message: "Chưa xác thực" 
-      });
-    }
-
-    if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ 
-        message: "Từ chối truy cập",
-        allowedRoles: roles,
-        currentRole: req.user.role
-      });
-    }
-
-    next();
-  };
-}
 
 module.exports = { authenticateToken, SECRET_KEY, checkRole, allowRoles };
