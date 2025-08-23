@@ -1,57 +1,7 @@
 [
-  {
-    "_id": "64a1f0033333333333333001",
-    "title": "Workshop NodeJS",
-    "description": "Chia sẻ về backend với Node.js",
-    "startTime": "2025-09-10T09:00:00Z",
-    "endTime": "2025-09-10T11:00:00Z",
-    "location": "FPT University - Hall A",
-    "maxParticipant": 50,
-    "status": "upcoming",
-    "eventCategoryIds": ["64a1f0022222222222222001"]
-  },
-  {
-    "_id": "64a1f0033333333333333002",
-    "title": "Seminar AI",
-    "description": "Thảo luận về ứng dụng AI trong cuộc sống",
-    "startTime": "2025-09-12T13:00:00Z",
-    "endTime": "2025-09-12T15:00:00Z",
-    "location": "FPT University - Hall B",
-    "maxParticipant": 100,
-    "status": "upcoming",
-    "eventCategoryIds": ["64a1f0022222222222222002"]
-  },
-  {
-    "_id": "64a1f0033333333333333003",
-    "title": "Hackathon 2025",
-    "description": "Cuộc thi lập trình 24h",
-    "startTime": "2025-09-20T08:00:00Z",
-    "endTime": "2025-09-21T08:00:00Z",
-    "location": "FPT University - Innovation Lab",
-    "maxParticipant": 200,
-    "status": "upcoming",
-    "eventCategoryIds": ["64a1f0022222222222222003"]
-  },
-  {
-    "_id": "64a1f0033333333333333004",
-    "title": "Networking Night",
-    "description": "Kết nối sinh viên và doanh nghiệp",
-    "startTime": "2025-09-15T18:00:00Z",
-    "endTime": "2025-09-15T21:00:00Z",
-    "location": "FPT University - Lobby",
-    "maxParticipant": 80,
-    "status": "upcoming",
-    "eventCategoryIds": ["64a1f0022222222222222004"]
-  },
-  {
-    "_id": "64a1f0033333333333333005",
-    "title": "Music Festival",
-    "description": "Lễ hội âm nhạc dành cho sinh viên",
-    "startTime": "2025-09-30T17:00:00Z",
-    "endTime": "2025-09-30T22:00:00Z",
-    "location": "FPT University - Stadium",
-    "maxParticipant": 500,
-    "status": "upcoming",
-    "eventCategoryIds": ["64a1f0022222222222222005"]
-  }
+  { "_id": { "$oid": "64a1f0033333333333333001" }, "title": "Workshop NodeJS", "description": "Chia sẻ về backend với Node.js", "startTime": { "$date": "2025-09-10T09:00:00Z" }, "endTime": { "$date": "2025-09-10T11:00:00Z" }, "location": "FPT University - Hall A", "maxParticipant": 50, "status": "upcoming", "eventCategoryIds": [ { "$oid": "64a1f0022222222222222001" } ] },
+  { "_id": { "$oid": "64a1f0033333333333333002" }, "title": "Seminar AI", "description": "Thảo luận về ứng dụng AI trong cuộc sống", "startTime": { "$date": "2025-09-12T13:00:00Z" }, "endTime": { "$date": "2025-09-12T15:00:00Z" }, "location": "FPT University - Hall B", "maxParticipant": 100, "status": "upcoming", "eventCategoryIds": [ { "$oid": "64a1f0022222222222222002" }, { "$oid": "64a1f0022222222222222005" } ] },
+  { "_id": { "$oid": "64a1f0033333333333333003" }, "title": "Hackathon 2025", "description": "Cuộc thi lập trình 24h", "startTime": { "$date": "2025-09-20T08:00:00Z" }, "endTime": { "$date": "2025-09-21T08:00:00Z" }, "location": "FPT University - Innovation Lab", "maxParticipant": 200, "status": "upcoming", "eventCategoryIds": [ { "$oid": "64a1f0022222222222222003" } ] },
+  { "_id": { "$oid": "64a1f0033333333333333004" }, "title": "Networking Night", "description": "Kết nối sinh viên và doanh nghiệp", "startTime": { "$date": "2025-09-15T18:00:00Z" }, "endTime": { "$date": "2025-09-15T21:00:00Z" }, "location": "FPT University - Lobby", "maxParticipant": 80, "status": "upcoming", "eventCategoryIds": [ { "$oid": "64a1f0022222222222222004" } ] },
+  { "_id": { "$oid": "64a1f0033333333333333005" }, "title": "Music Festival", "description": "Lễ hội âm nhạc dành cho sinh viên", "startTime": { "$date": "2025-09-30T17:00:00Z" }, "endTime": { "$date": "2025-09-30T22:00:00Z" }, "location": "FPT University - Stadium", "maxParticipant": 500, "status": "upcoming", "eventCategoryIds": [ { "$oid": "64a1f0022222222222222005" } ] }
 ]
