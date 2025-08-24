@@ -1,13 +1,3 @@
-<<<<<<< Updated upstream
-import React from 'react';
-
-function Home() {
-    return (
-        <div>
-            Đây là home
-        </div>
-    );
-=======
 // src/components/page/Home.js
 import React from "react";
 import Schedule from "./Schedule";
@@ -38,7 +28,6 @@ function Home() {
       <Schedule onRegister={handleRegister} />
     </div>
   );
->>>>>>> Stashed changes
 }
 
 export default Home;

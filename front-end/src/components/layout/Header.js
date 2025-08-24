@@ -1,8 +1,8 @@
 // src/components/layout/Header.js
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-
+ 
 function Header() {
     const { isAuthenticated, user, logout } = useAuth();
     const navigate = useNavigate();
@@ -57,7 +57,7 @@ function Header() {
                                 <Navbar.Text className="me-3">
                                     Xin chào, {user?.name || 'Người dùng'}
                                 </Navbar.Text>
-                                <Nav.Link onClick={logout}>Đăng xuất</Nav.Link>
+                                <Nav.Link onClick={handleLogout}>Đăng xuất</Nav.Link>
                             </>
                         ) : (
                             <>

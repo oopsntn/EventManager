@@ -17,6 +17,9 @@ export const AuthProvider = ({ children }) => {
         if (token && userData){
             setIsAuthenticated(true);
             setUser(JSON.parse(userData));
+        } else {
+            setIsAuthenticated(false);
+            setUser(null);
         }
         setLoading(false);
     }, []);
@@ -40,6 +43,14 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const register = async (name, email, password, phone) => {
+        try {
+            const response = await axios.post(`${API_URL}/register`, {name, email, password, phone});
+            return response.data;
+        } catch (error) {
+            throw error.response ? error.response.data : {message : "Registration Failed"};
+        }
+    }
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -47,18 +58,17 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     }
 
-    
-
     if (loading){
         return <div>Loading...</div>;
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, logout, useAuth }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, login, logout, register, useAuth }}>
             {children}
         </AuthContext.Provider>
     );
 };
+
 export const useAuth = () => {
         const context = useContext(AuthContext);
         if (!context){

@@ -1,23 +1,34 @@
 const express = require('express');
 const cors = require('cors');
+const http = require('http');
+const socketIo = require('socket.io');
 require('dotenv').config();
 const mongoose = require('mongoose');
-<<<<<<< Updated upstream
-=======
 const path = require("path");
->>>>>>> Stashed changes
 
 const server = express();
+
+const httpServer = http.createServer(server);
+
+const io = socketIo(httpServer, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
 const PORT = process.env.PORT || 9999;
 const HOST = process.env.HOST || 'localhost';
 
 // Middleware
 server.use(cors());
 server.use(express.json());
-<<<<<<< Updated upstream
-
-=======
 server.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Middleware
+server.use(cors());
+server.use(express.json());
+
 
 const userSockets = new Map();
 
@@ -50,7 +61,6 @@ io.on('connection', (socket) => {
 
 server.set('io', io);
 server.set('userSockets', userSockets);
->>>>>>> Stashed changes
 // Kết nối MongoDB
 mongoose.connect(`${process.env.MONGO_URL}${process.env.DBNAME}`)
   .then(() => {
@@ -67,14 +77,10 @@ server.use((req, res, next) => {
 server.use('/api/users', require('./routes/user.route'));
 server.use('/api/auth', require('./routes/auth.route'));
 server.use('/api/events', require('./routes/event.route'));
-<<<<<<< Updated upstream
-
-=======
 server.use('/api/notifications', require('./routes/notification.route'));
 server.use('/admin', require('./routes/admin.route'));
 server.use("/api/home", require("./routes/home.route"));
 server.use("/api/registrations", require("./routes/registration.route"));
->>>>>>> Stashed changes
 // Route gốc
 server.get('/', (req, res) => {
   res.send('Backend ExpressJS chạy OK!');
