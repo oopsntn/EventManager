@@ -8,6 +8,9 @@ const EventCategory = require("../models/eventCategory");
 // Hiển thị danh sách event
 router.get('/eventList', eventController.getEvents);
 
+// Lấy tất cả event categories
+router.get('/eventCategories', eventController.getAllEventCategories);
+
 // Lấy events của user hiện tại (user là organizer)
 router.get('/myEvents/:userId', eventController.getMyEvents);
 

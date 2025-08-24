@@ -26,6 +26,25 @@ exports.getEvents = async (req, res) => {
   }
 };
 
+// Lấy tất cả event categories
+exports.getAllEventCategories = async (req, res) => {
+  try {
+    const categories = await EventCategory.find({})
+      .sort({ name: 1 });
+
+    const categoryList = categories.map(category => ({
+      id: category._id,
+      name: category.name,
+      description: category.description
+    }));
+
+    return res.json(categoryList);
+  } catch (error) {
+    console.error('Get all event categories error:', error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
 // Lấy events mà user là organizer
 exports.getMyEvents = async (req, res) => {
   try {
