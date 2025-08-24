@@ -5,6 +5,7 @@ const Notification = require("../models/notification");
 const Organizer = require("../models/organizer");
 const User = require("../models/user");
 const mongoose = require("mongoose");
+const { createEventRegistrationNotification } = require('./notification.controller');
 
 exports.getEvents = async (req, res) => {
   try {
@@ -175,6 +176,7 @@ exports.createEvent = async (req, res) => {
         eventId: event._id
       });
       await organizer.save();
+      await createEventRegistrationNotification(req, data, event.title);
     }
     
     return res.status(201).json({ message: "Event created", id: event._id });

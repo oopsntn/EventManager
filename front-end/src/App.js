@@ -11,6 +11,8 @@ import PrivateRoute from './context/PrivateRoute';
 import AdminDashboard from './components/pages/admin/Management';
 import CreateUserForm from './components/pages/admin/CreateAccount';
 import UserDetail from './components/pages/admin/UserDetail';
+import Register from './components/auth/Register';
+import AdminNotificationPanel from './components/AdminNotificationPanel';
 
 function App() {
   return (
@@ -19,22 +21,26 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register/>}/>
         {/* <PrivateRoute path="/admin" component={AdminPage} allowedRoles={['admin']} /> */}
         {/* <PrivateRoute path="/organizer" component={OrganizerPage} allowedRoles={['organizer', 'admin']} /> */}
         {/* <PrivateRoute path="/user" component={UserPage} allowedRoles={['user', 'organizer', 'admin']} /> */}
-        <Route
-          path="/admin/acc-manage"
-          element={
-            <PrivateRoute allowedRoles={['admin']}>
-              <AdminDashboard />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/admin/acc-manage" element={
+          <PrivateRoute allowedRoles={['admin']}>
+            <AdminDashboard />
+          </PrivateRoute>
+        }/>
+        <Route path="/admin/notifications" element={
+          <PrivateRoute allowedRoles={['admin']}>
+            <AdminNotificationPanel />
+          </PrivateRoute>
+        } />
         <Route path="/create-user" element={<CreateUserForm />} />
         <Route path="/user/:id" element={<UserDetail />} />
-        <Route path="/my-events" element={<PrivateRoute allowedRoles={['organizer', 'admin']}>
-          <EventList />
-        </PrivateRoute>} />
+        <Route path="/my-events" element={
+          <PrivateRoute allowedRoles={['organizer', 'admin']}>
+            <EventList />
+          </PrivateRoute>} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/event/:id/registrations" element={<RegistrationList />} />
       </Routes>

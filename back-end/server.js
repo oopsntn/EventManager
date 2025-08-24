@@ -1,9 +1,22 @@
 const express = require('express');
 const cors = require('cors');
+const http = require('http');
+const socketIo = require('socket.io');
 require('dotenv').config();
 const mongoose = require('mongoose');
 
+
 const server = express();
+
+const httpServer = http.createServer(server);
+
+const io = socketIo(httpServer, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
 const PORT = process.env.PORT || 9999;
 const HOST = process.env.HOST || 'localhost';
 
@@ -11,6 +24,38 @@ const HOST = process.env.HOST || 'localhost';
 server.use(cors());
 server.use(express.json());
 
+
+const userSockets = new Map();
+
+io.on('connection', (socket) => {
+  console.log('User connected: ', socket.id);
+
+  socket.on('user_login', (userId) => {
+    userSockets.set(userId, socket.id);
+    socket.userId = userId;
+    console.log(`User ${userId} connected with socket ${socket.id}`);
+  });
+
+  socket.on('disconnect', () => {
+    if(socket.userId){
+      userSockets.delete(socket.userId);
+      console.log(`User ${socket.userId} disconnected`);
+    }
+  });
+
+  socket.on('mark_notification_read', async (notificationId) => {
+    try {
+      const Notification = require('./models/notification');
+      await Notification.findByIdAndUpdate(notificationId, {status: 'read'});
+      socket.emit('notification_marked_read', notificationId);
+    } catch (error) {
+      console.error('Error marking notification as read: ', error);
+    }
+  });
+});
+
+server.set('io', io);
+server.set('userSockets', userSockets);
 // Kết nối MongoDB
 mongoose.connect(`${process.env.MONGO_URL}${process.env.DBNAME}`)
   .then(() => {
@@ -27,6 +72,7 @@ server.use((req, res, next) => {
 server.use('/api/users', require('./routes/user.route'));
 server.use('/api/auth', require('./routes/auth.route'));
 server.use('/api/events', require('./routes/event.route'));
+server.use('/api/notifications', require('./routes/notification.route'));
 server.use('/admin', require('./routes/admin.route'));
 // Route gốc
 server.get('/', (req, res) => {
