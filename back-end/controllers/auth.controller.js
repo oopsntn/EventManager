@@ -81,7 +81,7 @@ const transporter = nodemailer.createTransport({
 exports.register = async (req, res) => {
     try {
         const { name, email, password, phone } = req.body;
-
+ 
         if (!name || !email || !password || !phone) {
             return res.status(400).json({ message: "All fields are required" })
         }
