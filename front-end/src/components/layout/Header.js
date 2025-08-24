@@ -27,7 +27,7 @@ function Header() {
                                 {user.role === 'admin' && (
                                     <>
                                     <Nav.Link as={Link} to="/admin/acc-manage">Bảng điều khiển</Nav.Link>
-                                    {/* <Nav.Link as={Link} to="/admin/notifications">Quản lý thông báo</Nav.Link> */}
+                                    <Nav.Link as={Link} to="/admin/notifications">Quản lý thông báo</Nav.Link>
                                     </>
                                 )}
                                 {user.role === 'organizer' && (

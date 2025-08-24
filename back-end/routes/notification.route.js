@@ -4,6 +4,7 @@ const router = express.Router();
 
 const notificationController = require('../controllers/notification.controller');
 
+router.get('/all', notificationController.getAllNotifications);
 // Lấy notifications của user
 router.get('/user/:userId', notificationController.getUserNotifications);
 // Admin tạo notification cho user cụ thể

@@ -48,45 +48,79 @@ exports.getUserNotifications = async (req,res) => {
 
 exports.createNotificationForUser = async (req, res) => {
     try {
-        const {userId, content, eventId} = req.body;
+        const {userEmail, content } = req.body;
 
-        if (!userId || !content){
-            return res.status(400).json({message: "userId and content are required"});
+        if (!userEmail || !content){
+            return res.status(400).json({
+                success: false,
+                message: "Email và nội dung thông báo không được để trống"});
         }
 
-        const user = await User.findById(userId);
+        const user = await User.findOne({email: userEmail});
         if(!user){
-            return res.status(404).json({message: "User not found"});
+            return res.status(404).json({
+                message: `Không tìm thấy người dùng với email: ${userEmail}`});
         }
 
         const notification = new Notification({
-            userId,
+            userId: user._id,
             content,
-            eventId: eventId || null,
+            eventId: null,
             status: 'unread'
         });
 
         await notification.save();
 
-        await notification.populate('eventId', 'title startTime location');
+        // await notification.populate('eventId', 'title startTime location');
 
-        sendNotificationToUser(req, userId, {
+        sendNotificationToUser(req, user._id, {
             id: notification._id,
             content: notification.content,
-            eventId: notification.eventId,
             status: notification.status,
             createdAt: notification.createdAt
         });
 
-        res.status(201).json({message: "Notification created and sent successfully", 
-            notification
+        res.status(201).json({message: "Gửi thông báo thành công", 
+            notification: {
+                id: notification._id,
+                content: notification.content,
+                status: notification.status,
+                createdAt: notification.createdAt,
+                sentTo: {
+                    email: user.email,
+                    name: user.name
+                }
+            }
         });
     } catch (error) {
         console.error('Create notification error: ', error);
         res.status(500).json({ message:"Server error", error: error.message});
     }
 };
+exports.getAllNotifications = async (req, res) => {
+    try {
+        const notifications = await Notification.find()
+            .populate('userId', 'name email')
+            .populate('eventId', 'title startTime location')
+            .sort({ createdAt: -1 })
+            .limit(50);
 
+        console.log(`📊 Total notifications in DB: ${notifications.length}`);
+
+        res.json({
+            success: true,
+            count: notifications.length,
+            notifications
+        });
+    } catch (error) {
+        console.error('❌ Get all notifications error:', error);
+        res.status(500).json({
+            success: false,
+            message: "Server error",
+            error: error.message
+        });
+    }
+};
 exports.broadcastNotification = async (req, res) => {
     try {
         const {content, eventId, userRole} = req.body;
