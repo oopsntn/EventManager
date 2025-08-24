@@ -8,6 +8,9 @@ import AdminDashboard from "./components/pages/admin/Management";
 import CreateUserForm from "./components/pages/admin/CreateAccount";
 import UserDetail from "./components/pages/admin/UserDetail";
 import Statistics from "./components/pages/admin/Dashboard";
+import EventList from "./components/pages/EventList";
+import EventDetail from "./components/pages/EventDetail";
+import RegistrationList from "./components/pages/RegistrationList";
 
 function App() {
   return (
@@ -20,7 +23,9 @@ function App() {
         <Route path="/create-user" element={<CreateUserForm />} />
         <Route path="/user/:id" element={<UserDetail />} />
         <Route path="/statistics" element={<Statistics />} />
-
+        <Route path="/my-events" element={<EventList />} />
+        <Route path="/event/:id" element={<EventDetail />} />
+        <Route path="/event/:id/registrations" element={<RegistrationList />} />
       </Routes>
       <Footer />
     </div>
