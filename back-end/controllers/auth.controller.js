@@ -117,7 +117,7 @@ exports.register = async (req, res) => {
         //Save user to database
         await newUser.save();
 
-        const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verifyToken}`;
+        const verificationLink = `${process.env.BACKEND_URL}/api/auth/verify-email?token=${verifyToken}`;
 
         // send email
         const mailOptions = {
@@ -154,17 +154,22 @@ exports.verifyEmail = async (req, res) => {
             verifyToken: token,
             verifyTokenExpiry: { $gt: new Date() } // Kiểm tra token chưa hết hạn
         });
-
+        // if (user.is_verified == true) {
+        //     return res.status(200).json({ message: "Email is already verified" });
+        // }
         if (!user) {
+            return res.redirect(`${process.env.FRONTEND_URL}/login?is_verified=false`)
             return res.status(400).json({ message: "Invalid or expired verification token" });
         }
+
+
         user.is_verified = true;
         user.verifyToken = undefined; // Xóa token sau khi xác thực
         user.verifyTokenExpiry = undefined; // Xóa thời gian hết hạn token
 
         await user.save();
+        return res.redirect(`${process.env.FRONTEND_URL}/login?is_verified=true`)
         res.status(200).json({ message: "Email verified successfully" });
-
     } catch (error) {
         console.error('Email verification error:', error);
         res.status(500).json({

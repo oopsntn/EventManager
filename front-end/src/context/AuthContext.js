@@ -18,17 +18,8 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(true);
             setUser(JSON.parse(userData));
         } else {
-            // Set default user for development (bypass login)
-            const defaultUser = {
-                id: '64a1f001111111111111cccc',
-                name: 'Organizer Test',
-                email: 'organizer@example.com',
-                role: 'organizer'
-            };
-            setIsAuthenticated(true);
-            setUser(defaultUser);
-            localStorage.setItem('user', JSON.stringify(defaultUser));
-            localStorage.setItem('token', 'default-token-for-development');
+            setIsAuthenticated(false);
+            setUser(null);
         }
         setLoading(false);
     }, []);
@@ -52,6 +43,14 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const register = async (name, email, password, phone) => {
+        try {
+            const response = await axios.post(`${API_URL}/register`, {name, email, password, phone});
+            return response.data;
+        } catch (error) {
+            throw error.response ? error.response.data : {message : "Registration Failed"};
+        }
+    }
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -64,7 +63,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, logout, useAuth }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, login, logout, register, useAuth }}>
             {children}
         </AuthContext.Provider>
     );

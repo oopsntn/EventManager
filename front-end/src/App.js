@@ -11,6 +11,9 @@ import Statistics from "./components/pages/admin/Dashboard";
 import EventList from "./components/pages/EventList";
 import EventDetail from "./components/pages/EventDetail";
 import RegistrationList from "./components/pages/RegistrationList";
+import PrivateRoute from './context/PrivateRoute';
+import Register from './components/auth/Register';
+import AdminNotificationPanel from './components/AdminNotificationPanel';
 
 function App() {
   return (
@@ -24,6 +27,23 @@ function App() {
         <Route path="/user/:id" element={<UserDetail />} />
         <Route path="/statistics" element={<Statistics />} />
         <Route path="/my-events" element={<EventList />} />
+        <Route path="/register" element={<Register/>}/>
+        <Route path="/admin/acc-manage" element={
+          <PrivateRoute allowedRoles={['admin']}>
+            <AdminDashboard />
+          </PrivateRoute>
+        }/>
+        <Route path="/admin/notifications" element={
+          <PrivateRoute allowedRoles={['admin']}>
+            <AdminNotificationPanel />
+          </PrivateRoute>
+        } />
+        <Route path="/create-user" element={<CreateUserForm />} />
+        <Route path="/user/:id" element={<UserDetail />} />
+        <Route path="/my-events" element={
+          <PrivateRoute allowedRoles={['organizer', 'admin']}>
+            <EventList />
+          </PrivateRoute>} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/event/:id/registrations" element={<RegistrationList />} />
       </Routes>

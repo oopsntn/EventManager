@@ -5,6 +5,7 @@ const Notification = require("../models/notification");
 const Organizer = require("../models/organizer");
 const User = require("../models/user");
 const mongoose = require("mongoose");
+const { createEventRegistrationNotification } = require('./notification.controller');
 
 exports.getEvents = async (req, res) => {
   try {
@@ -22,6 +23,25 @@ exports.getEvents = async (req, res) => {
     return res.json(eventList);
   } catch (error) {
     console.error('Get events error:', error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// Lấy tất cả event categories
+exports.getAllEventCategories = async (req, res) => {
+  try {
+    const categories = await EventCategory.find({})
+      .sort({ name: 1 });
+
+    const categoryList = categories.map(category => ({
+      id: category._id,
+      name: category.name,
+      description: category.description
+    }));
+
+    return res.json(categoryList);
+  } catch (error) {
+    console.error('Get all event categories error:', error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -175,6 +195,7 @@ exports.createEvent = async (req, res) => {
         eventId: event._id
       });
       await organizer.save();
+      await createEventRegistrationNotification(req, data, event.title);
     }
     
     return res.status(201).json({ message: "Event created", id: event._id });

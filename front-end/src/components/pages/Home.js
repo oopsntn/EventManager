@@ -19,11 +19,6 @@ function Home() {
                                 Xem Events của tôi
                             </Button>
                         </Link>
-                        <Link to="/login">
-                            <Button variant="outline-primary" size="lg">
-                                Đăng nhập
-                            </Button>
-                        </Link>
                     </div>
                 </Col>
             </Row>

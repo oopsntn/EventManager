@@ -1,0 +1,34 @@
+/* components/NotificationBell.css */
+.notification-bell-toggle {
+    font-size: 1.2rem;
+    color: #6c757d;
+    text-decoration: none !important;
+}
+
+.notification-bell-toggle:hover {
+    color: #495057;
+}
+
+.notification-dropdown-menu {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.notification-item {
+    border: none !important;
+    padding: 0.75rem 1rem;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.notification-item:hover {
+    background-color: #f8f9fa;
+}
+
+.notification-item.unread {
+    background-color: #e3f2fd;
+    border-left: 3px solid #2196f3;
+}
+
+.notification-item.unread:hover {
+    background-color: #bbdefb;
+}
