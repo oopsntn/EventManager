@@ -5,21 +5,49 @@ import { useAuth } from '../../context/AuthContext';
 
 function Header() {
     const { isAuthenticated, user, logout } = useAuth();
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        logout(); // Gọi hàm logout
+        navigate('/login'); // Chuyển hướng về trang chính
+    };
 
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand as={Link} to="/">
-                    My App
-                </Navbar.Brand>
+                
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/">Trang chủ</Nav.Link>
+                        
                         {isAuthenticated && (
                             <>
-                                <Nav.Link as={Link} to="/dashboard">Bảng điều khiển</Nav.Link>
-                                <Nav.Link as={Link} to="/profile">Hồ sơ</Nav.Link>
+                                {user.role === 'admin' && (
+                                    <>
+                                    <Nav.Link as={Link} to="/admin/acc-manage">Bảng điều khiển</Nav.Link>
+                                    {/* <Nav.Link as={Link} to="/admin/notifications">Quản lý thông báo</Nav.Link> */}
+                                    <Nav.Link as={Link} to="/profile">Hồ sơ</Nav.Link>
+                                    </>
+                                )}
+                                {user.role === 'organizer' && (
+                                    <>
+                                    <Nav.Link as={Link} to="/my-events">Events của tôi</Nav.Link>
+                                    <Nav.Link as={Link} to="/organizer/dashboard">Bảng điều khiển Tổ chức</Nav.Link>
+                                    <Nav.Link as={Link} to="/profile">Hồ sơ</Nav.Link>
+                                    </>
+                                )}
+                                {user.role === 'user' && (
+                                    <>
+                                        <Navbar.Brand as={Link} to="/">
+                                            🎉 EventManager
+                                        </Navbar.Brand>
+                                        <Nav.Link as={Link} to="/">Trang chủ</Nav.Link>
+                                        <Nav.Link as={Link} to="/profile">Hồ sơ</Nav.Link>
+                                        <Nav.Link as={Link} to="/registrations">
+                                        Sự kiện bạn đã đăng ký
+                                        </Nav.Link>
+                                    </>
+                                )}
+                                
                             </>
                         )}
                     </Nav>
