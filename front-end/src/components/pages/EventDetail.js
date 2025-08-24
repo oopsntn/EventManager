@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Card, Row, Col, Badge, Alert, Spinner } from 'react-bootstrap';
+import { useAuth } from '../../context/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const EventDetail = () => {
@@ -10,6 +11,7 @@ const EventDetail = () => {
     const [error, setError] = useState('');
     const { id } = useParams();
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     useEffect(() => {
         fetchEventDetail();
@@ -146,6 +148,13 @@ const EventDetail = () => {
                                         <span className="text-muted">Không có danh mục</span>
                                     )}
                                 </div>
+                            </div>
+
+                            <div className="mb-3">
+                                <h6>Trạng thái</h6>
+                                <p className="text-muted">
+                                    {getStatusBadge(event.status)}
+                                </p>
                             </div>
                         </Col>
 
