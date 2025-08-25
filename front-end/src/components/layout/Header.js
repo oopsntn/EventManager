@@ -43,9 +43,6 @@ function Header() {
                                 )}
                                 {user.role === 'user' && (
                                     <>
-                                        <Navbar.Brand as={Link} to="/">
-                                            🎉 EventManager
-                                        </Navbar.Brand>
                                         <Nav.Link as={Link} to="/">Trang chủ</Nav.Link>
                                         <Nav.Link as={Link} to="/profile">Hồ sơ</Nav.Link>
                                         <Nav.Link as={Link} to="/registrations">
