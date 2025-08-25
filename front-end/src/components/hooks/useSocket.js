@@ -6,30 +6,48 @@ export const useSocket = (userId) => {
     const [socket, setSocket] = useState(null);
     const [notifications, setNotifications] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
+    const [isConnected, setIsConnected] = useState(false);
 
     useEffect(() => {
         if (!userId) return;
-
-        const newSocket = io('http://localhost:9999');
+        console.log('🔌 Connecting socket for user:', userId);
+        const newSocket = io('http://localhost:9999', {
+            transports: ['websocket', 'polling'],
+            timeout: 20000,
+            forceNew: true
+        });
         
         newSocket.on('connect', () => {
-            console.log('Connected to server');
+            console.log('✅ Socket connected:', newSocket.id);
+            setIsConnected(true);
             // Đăng nhập user
-            newSocket.emit('user_login', userId);
+            newSocket.emit('join_user', userId);
+            console.log('👤 Joined user room:', userId);
         });
-
+        newSocket.on('disconnect', () => {
+            console.log('❌ Socket disconnected');
+            setIsConnected(false);
+        });
+        newSocket.on('connect_error', (error) => {
+            console.error('❌ Socket connection error:', error);
+            setIsConnected(false);
+        });
         newSocket.on('new_notification', (notification) => {
-            console.log('New notification received:', notification);
-            setNotifications(prev => [notification, ...prev]);
+            console.log('🔔 New notification received:', notification);
+            setNotifications(prev => {
+                const exists = prev.find(n => n.id === notification.id);
+                if (exists) return prev;
+                return [notification, ...prev];
+            });
             setUnreadCount(prev => prev + 1);
             
-            // Hiển thị browser notification nếu được phép
-            if (Notification.permission === 'granted') {
-                new Notification('New Event Notification', {
-                    body: notification.content,
-                    icon: '/favicon.ico'
-                });
-            }
+            // // Hiển thị browser notification nếu được phép
+            // if (Notification.permission === 'granted') {
+            //     new Notification('New Event Notification', {
+            //         body: notification.content,
+            //         icon: '/favicon.ico'
+            //     });
+            // }
         });
 
         newSocket.on('notification_marked_read', (notificationId) => {
