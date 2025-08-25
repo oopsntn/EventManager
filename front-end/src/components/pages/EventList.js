@@ -6,6 +6,23 @@ import { useAuth } from '../../context/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const EventList = () => {
+    const toInputDateTimeLocal = (dateTimeString) => {
+        if (!dateTimeString) return '';
+        const date = new Date(dateTimeString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+    };
+
+    const localToISOString = (localDateTimeString) => {
+        if (!localDateTimeString) return '';
+        const date = new Date(localDateTimeString);
+        return date.toISOString();
+    };
+
     const [events, setEvents] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -85,11 +102,17 @@ const EventList = () => {
         }
 
         try {
+            const payload = {
+                ...formData,
+                startTime: localToISOString(formData.startTime),
+                endTime: localToISOString(formData.endTime),
+                maxParticipant: formData.maxParticipant ? Number(formData.maxParticipant) : undefined
+            };
             if (editingEvent) {
-                await axios.put(`http://localhost:9999/api/events/updateEvent/${editingEvent.id}`, formData);
+                await axios.put(`http://localhost:9999/api/events/updateEvent/${editingEvent.id}`, payload);
             } else {
                 await axios.post('http://localhost:9999/api/events/createEvent', {
-                    ...formData,
+                    ...payload,
                     organizerId: userId
                 });
             }
@@ -117,8 +140,8 @@ const EventList = () => {
         setFormData({
             title: event.title,
             description: event.description,
-            startTime: event.startTime.split('T')[0] + 'T' + event.startTime.split('T')[1].substring(0, 5),
-            endTime: event.endTime.split('T')[0] + 'T' + event.endTime.split('T')[1].substring(0, 5),
+            startTime: toInputDateTimeLocal(event.startTime),
+            endTime: toInputDateTimeLocal(event.endTime),
             location: event.location,
             maxParticipant: event.maxParticipant,
             status: event.status,
