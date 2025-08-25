@@ -4,6 +4,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 require('dotenv').config();
 const mongoose = require('mongoose');
+const path = require("path");
 
 
 const server = express();
@@ -23,7 +24,11 @@ const HOST = process.env.HOST || 'localhost';
 // Middleware
 server.use(cors());
 server.use(express.json());
+server.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+// Middleware
+server.use(cors());
+server.use(express.json());
 
 const userSockets = new Map();
 
@@ -74,6 +79,8 @@ server.use('/api/auth', require('./routes/auth.route'));
 server.use('/api/events', require('./routes/event.route'));
 server.use('/api/notifications', require('./routes/notification.route'));
 server.use('/admin', require('./routes/admin.route'));
+server.use("/api/home", require("./routes/home.route"));
+server.use("/api/registrations", require("./routes/registration.route"));
 // Route gốc
 server.get('/', (req, res) => {
   res.send('Backend ExpressJS chạy OK!');

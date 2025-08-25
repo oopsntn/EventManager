@@ -25,17 +25,25 @@ export function Login() {
     }, [location]);
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError('');
-        setLoading(true);
-        try {
-            await login(email, password);
-            navigate('/');
-        } catch (error) {
-            setError(error.message || 'Login failed');
-            setLoading(false);
-        }
-    };
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+        // login trả về thông tin user
+        const loggedInUser = await login(email, password);
+            const role = loggedInUser.user.role; // lấy từ user object
+
+            if (role === 'user') navigate('/');
+            else if (role === 'organizer') navigate('/my-events');
+            else if (role === 'admin') navigate('/admin/acc-manage');
+
+    } catch (error) {
+        setError(error.message || 'Login failed');
+        setLoading(false);
+    }
+};
+
 
     return (
         <div className='login-container'>

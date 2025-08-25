@@ -2,6 +2,7 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+ 
 import NotificationBell from '../NotificationBell';
 
 function Header() {
@@ -15,18 +16,21 @@ function Header() {
     return (
         <Navbar bg="light" expand="lg">
             <Container>
+                
                 <Navbar.Brand as={Link} to="/">
                     🎉 EventManager
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/">Trang chủ</Nav.Link>
+                        
                         {isAuthenticated && (
                             <>
                                 {user.role === 'admin' && (
                                     <>
                                     <Nav.Link as={Link} to="/admin/acc-manage">Bảng điều khiển</Nav.Link>
+                                    <Nav.Link as={Link} to="/admin/notifications">Quản lý thông báo</Nav.Link>
+                                    <Nav.Link as={Link} to="/profile">Hồ sơ</Nav.Link>
                                     <Nav.Link as={Link} to="/admin/notifications">Quản lý thông báo</Nav.Link>
                                     </>
                                 )}
@@ -34,12 +38,21 @@ function Header() {
                                     <>
                                     <Nav.Link as={Link} to="/my-events">Events của tôi</Nav.Link>
                                     <Nav.Link as={Link} to="/organizer/dashboard">Bảng điều khiển Tổ chức</Nav.Link>
+                                    <Nav.Link as={Link} to="/profile">Hồ sơ</Nav.Link>
                                     </>
                                 )}
                                 {user.role === 'user' && (
-                                    <Nav.Link as={Link} to="/user/dashboard">Bảng điều khiển Người dùng</Nav.Link>
+                                    <>
+                                        <Navbar.Brand as={Link} to="/">
+                                            🎉 EventManager
+                                        </Navbar.Brand>
+                                        <Nav.Link as={Link} to="/">Trang chủ</Nav.Link>
+                                        <Nav.Link as={Link} to="/profile">Hồ sơ</Nav.Link>
+                                        <Nav.Link as={Link} to="/registrations">
+                                        Sự kiện bạn đã đăng ký
+                                        </Nav.Link>
+                                    </>
                                 )}
-                                <Nav.Link as={Link} to="/profile">Hồ sơ</Nav.Link>
                             </>
                         )}
                     </Nav>
