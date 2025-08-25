@@ -16,10 +16,12 @@ import Profile from './components/pages/Profile';
 import EventList from './components/pages/EventList';
 import EventDetail from './components/pages/EventDetail';
 import RegistrationList from './components/pages/RegistrationList';
+import Statistics from "./components/pages/admin/Dashboard";
+
 function App() {
   return (
     <div>
-      <Header/>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -27,9 +29,11 @@ function App() {
         <Route path="/registrations" element={<Registration />} />
         <Route path="/events/:id" element={<EventDetailUser/>} />
         <Route path="/profile" element={<Profile />} />
-        {/* <PrivateRoute path="/admin" component={AdminPage} allowedRoles={['admin']} /> */}
-        {/* <PrivateRoute path="/organizer" component={OrganizerPage} allowedRoles={['organizer', 'admin']} /> */}
-        {/* <PrivateRoute path="/user" component={UserPage} allowedRoles={['user', 'organizer', 'admin']} /> */}
+        <Route path="/acc-manage" element={<AdminDashboard />} />
+        <Route path="/create-user" element={<CreateUserForm />} />
+        <Route path="/user/:id" element={<UserDetail />} />
+        <Route path="/statistics" element={<Statistics />} />
+        <Route path="/my-events" element={<EventList />} />
         <Route path="/admin/acc-manage" element={
           <PrivateRoute allowedRoles={['admin']}>
             <AdminDashboard />
@@ -40,18 +44,11 @@ function App() {
             <AdminNotificationPanel />
           </PrivateRoute>
         } />
-        <Route path="/create-user" element={<CreateUserForm />} />
-        <Route path="/user/:id" element={<UserDetail />} />
-        <Route path="/my-events" element={
-          <PrivateRoute allowedRoles={['organizer', 'admin']}>
-            <EventList />
-          </PrivateRoute>} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/event/:id/registrations" element={<RegistrationList />} />
       </Routes>
       <Footer />
     </div>
-
   );
 }
 

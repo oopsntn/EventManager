@@ -85,7 +85,8 @@ module.exports.createAccount = async (req, res) => {
       email,
       password: hashedPassword,
       role: "organizer",
-      phone: phone || ""
+      phone: phone || "",
+      is_verified: true,
     });
 
     //Xóa password khỏi res
@@ -264,3 +265,4 @@ module.exports.getAllEvent = async (req, res) => {
     });
   }
 };
+

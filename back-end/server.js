@@ -6,6 +6,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const path = require("path");
 
+
 const server = express();
 
 const httpServer = http.createServer(server);
@@ -28,7 +29,6 @@ server.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Middleware
 server.use(cors());
 server.use(express.json());
-
 
 const userSockets = new Map();
 

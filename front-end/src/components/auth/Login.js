@@ -1,17 +1,28 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Button } from 'react-bootstrap';
+import { Alert, Button } from 'react-bootstrap';
+import { useEffect } from 'react';
 
 export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-
+    const [successMessage, setSuccessMessage] = useState('');
+    const [tokenErrorMessage, setTokenErrorMessage] = useState('');
     const navigate = useNavigate();
-
+    const location = useLocation();
     const {login} = useAuth();
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        if(params.get('verified')){
+            setSuccessMessage('Xác thực thành công ! Hãy thưởng nhạc và cắn 1 miếng bánh Danisa thôi nào');
+        } else if (params.get('verified') === 'false') {
+            setTokenErrorMessage('Token đã hết hạn hoặc không hợp lệ. Vui lòng thử lại.');
+        }
+    }, [location]);
 
     const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +48,8 @@ export function Login() {
     return (
         <div className='login-container'>
             <form onSubmit={handleSubmit}>
+                {successMessage && <Alert variant="success">{successMessage}</Alert>}
+                {tokenErrorMessage && <Alert variant="danger">{tokenErrorMessage}</Alert>}
                 <div className='form-group'>
                     <label>Email</label>
                     <input

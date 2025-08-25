@@ -15,4 +15,5 @@ router.get('/getAllEvent', adminController.getAllEvent);
 
 
 
+
 module.exports = router;
