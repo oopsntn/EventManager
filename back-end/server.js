@@ -5,7 +5,8 @@ const socketIo = require('socket.io');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const path = require("path");
-
+const session = require('express-session');
+const passport = require('./middleware/passport');
 const server = express();
 const httpServer = http.createServer(server);
 
@@ -21,17 +22,32 @@ const PORT = process.env.PORT || 9999;
 const HOST = process.env.HOST || 'localhost';
 
 // Middleware
-server.use(cors());
+server.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true
+}));
 server.use(express.json());
 server.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+server.use(session({
+  secret: process.env.SESSION_SECRET ? 'LOADED ✅' : 'MISSING ❌',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false, // set true nếu dùng HTTPS
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
+
+// Passport middleware
+server.use(passport.initialize());
+server.use(passport.session());
 // 🔥 Map để lưu userId -> socketId
 const userSockets = new Map();
 
 io.on('connection', (socket) => {
   console.log('🔌 User connected:', socket.id);
 
-  // 🔥 Sửa event name để khớp với frontend
   socket.on('join_user', (userId) => {
     console.log(`👤 User ${userId} joining with socket ${socket.id}`);
     

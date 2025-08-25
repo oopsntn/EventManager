@@ -314,3 +314,38 @@ exports.verifyEmail = async (req, res) => {
         });
     }
 }
+exports.googleSuccess = async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.redirect(`${process.env.FRONTEND_URL}/login?error=google_auth_failed`);
+        }
+
+        // Tạo JWT token
+        const payload = {
+            id: req.user._id,
+            name: req.user.name,
+            email: req.user.email,
+            role: req.user.role
+        };
+
+        const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "1h" });
+
+        // Redirect về frontend với token
+        res.redirect(`${process.env.FRONTEND_URL}/login?token=${token}&user=${encodeURIComponent(JSON.stringify({
+            id: req.user._id,
+            name: req.user.name,
+            email: req.user.email,
+            role: req.user.role,
+            avatar: req.user.avatar
+        }))}`);
+
+    } catch (error) {
+        console.error('Google OAuth success error:', error);
+        res.redirect(`${process.env.FRONTEND_URL}/login?error=server_error`);
+    }
+};
+
+// Google OAuth Failure
+exports.googleFailure = (req, res) => {
+    res.redirect(`${process.env.FRONTEND_URL}/login?error=google_auth_failed`);
+};

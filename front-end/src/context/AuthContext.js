@@ -42,7 +42,20 @@ export const AuthProvider = ({ children }) => {
             throw error.response ? error.response.data : { message: "Login Failed" };
         }
     }
-
+    const handleGoogleCallback = (token, userData) => {
+        try {
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', userData);
+            setIsAuthenticated(true);
+            setUser(JSON.parse(userData));
+            return JSON.parse(userData);
+        } catch (error) {
+            console.error('Google callback error:', error);
+            setIsAuthenticated(false);
+            setUser(null);
+            throw error;
+        }
+    };
     const register = async (name, email, password, phone) => {
         try {
             const response = await axios.post(`${API_URL}/register`, {name, email, password, phone});
@@ -63,7 +76,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, logout, register, useAuth }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, login, logout, register, handleGoogleCallback, useAuth }}>
             {children}
         </AuthContext.Provider>
     );

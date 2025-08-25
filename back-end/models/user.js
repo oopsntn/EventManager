@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
   verifyTokenExpiry: { type: Date },
   resetToken: { type: String }, 
   resetTokenExpiry: { type: Date },
+  googleId: { type: String },
   createdAt: { type: Date, default: Date.now }
 });
 

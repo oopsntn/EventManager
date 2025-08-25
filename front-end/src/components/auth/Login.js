@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Alert, Button } from 'react-bootstrap';
 import { useEffect } from 'react';
+import GoogleLoginButton from './GoogleLoginButton';
 
 
 export function Login() {
@@ -14,11 +15,46 @@ export function Login() {
     const [tokenErrorMessage, setTokenErrorMessage] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
-    const {login} = useAuth();
+    const { login, handleGoogleCallback } = useAuth();
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
-        if(params.get('verified')){
+
+        const token = params.get('token');
+        const user = params.get('user');
+        const error = params.get('error');
+        // Xử lý Google OAuth callback
+        if (token && user) {
+            try {
+                const userData = handleGoogleCallback(token, user);
+                setSuccessMessage('Đăng nhập Google thành công!');
+
+                // Redirect based on role
+                const role = userData.role;
+                setTimeout(() => {
+                    if (role === 'user') navigate('/');
+                    else if (role === 'organizer') navigate('/my-events');
+                    else if (role === 'admin') navigate('/admin/acc-manage');
+                }, 1000);
+
+            } catch (err) {
+                setError('Có lỗi xảy ra khi xử lý đăng nhập Google');
+            }
+        } else if (error) {
+            switch (error) {
+                case 'google_auth_failed':
+                    setError('Đăng nhập Google thất bại. Vui lòng thử lại.');
+                    break;
+                case 'server_error':
+                    setError('Lỗi server. Vui lòng thử lại sau.');
+                    break;
+                default:
+                    setError('Có lỗi xảy ra. Vui lòng thử lại.');
+            }
+        }
+
+        // Xử lý email verification
+        if (params.get('verified')) {
             setSuccessMessage('Xác thực thành công ! Hãy thưởng nhạc và cắn 1 miếng bánh Danisa thôi nào');
         } else if (params.get('verified') === 'false') {
             setTokenErrorMessage('Token đã hết hạn hoặc không hợp lệ. Vui lòng thử lại.');
@@ -26,24 +62,24 @@ export function Login() {
     }, [location]);
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
+        e.preventDefault();
+        setError('');
+        setLoading(true);
 
-    try {
-        // login trả về thông tin user
-        const loggedInUser = await login(email, password);
+        try {
+            // login trả về thông tin user
+            const loggedInUser = await login(email, password);
             const role = loggedInUser.user.role; // lấy từ user object
 
             if (role === 'user') navigate('/');
             else if (role === 'organizer') navigate('/my-events');
             else if (role === 'admin') navigate('/admin/acc-manage');
 
-    } catch (error) {
-        setError(error.message || 'Login failed');
-        setLoading(false);
-    }
-};
+        } catch (error) {
+            setError(error.message || 'Login failed');
+            setLoading(false);
+        }
+    };
 
 
     return (
@@ -59,7 +95,7 @@ export function Login() {
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Nhập email"
                         required
-                        disabled={loading}/>
+                        disabled={loading} />
                 </div>
 
                 <div className='form-group'>
@@ -70,7 +106,7 @@ export function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder='Nhập mật khẩu'
                         required
-                        disabled={loading}/>
+                        disabled={loading} />
                 </div>
 
                 {error && (
@@ -83,6 +119,12 @@ export function Login() {
                     {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
                 </Button>
 
+                <div className="text-center my-3">
+                    <span className="text-muted">hoặc</span>
+                </div>
+
+                {/* Google Login Button */}
+                <GoogleLoginButton />
                 <div className='form-footer'>
                     <span>Bạn chưa có tài khoản? </span>
                     <a href="/register">Đăng ký ngay</a>
