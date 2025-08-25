@@ -6,8 +6,26 @@ import { useAuth } from '../../context/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const EventList = () => {
+    const toInputDateTimeLocal = (dateTimeString) => {
+        if (!dateTimeString) return '';
+        const date = new Date(dateTimeString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+    };
+
+    const localToISOString = (localDateTimeString) => {
+        if (!localDateTimeString) return '';
+        const date = new Date(localDateTimeString);
+        return date.toISOString();
+    };
+
     const [events, setEvents] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -58,6 +76,14 @@ const EventList = () => {
         }
     };
 
+    const normalizedIncludes = (source, query) => {
+        if (!query) return true;
+        const normalize = (s) => s
+            ? s.toString().normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase()
+            : '';
+        return normalize(source).includes(normalize(query));
+    };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -85,11 +111,17 @@ const EventList = () => {
         }
 
         try {
+            const payload = {
+                ...formData,
+                startTime: localToISOString(formData.startTime),
+                endTime: localToISOString(formData.endTime),
+                maxParticipant: formData.maxParticipant ? Number(formData.maxParticipant) : undefined
+            };
             if (editingEvent) {
-                await axios.put(`http://localhost:9999/api/events/updateEvent/${editingEvent.id}`, formData);
+                await axios.put(`http://localhost:9999/api/events/updateEvent/${editingEvent.id}`, payload);
             } else {
                 await axios.post('http://localhost:9999/api/events/createEvent', {
-                    ...formData,
+                    ...payload,
                     organizerId: userId
                 });
             }
@@ -117,8 +149,8 @@ const EventList = () => {
         setFormData({
             title: event.title,
             description: event.description,
-            startTime: event.startTime.split('T')[0] + 'T' + event.startTime.split('T')[1].substring(0, 5),
-            endTime: event.endTime.split('T')[0] + 'T' + event.endTime.split('T')[1].substring(0, 5),
+            startTime: toInputDateTimeLocal(event.startTime),
+            endTime: toInputDateTimeLocal(event.endTime),
             location: event.location,
             maxParticipant: event.maxParticipant,
             status: event.status,
@@ -171,9 +203,18 @@ const EventList = () => {
         <div className="container mt-4">
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <h2>Danh sách Events của tôi</h2>
-                <Button variant="primary" onClick={() => setShowModal(true)}>
-                    Tạo Event mới
-                </Button>
+                <div className="d-flex gap-2 align-items-center">
+                    <Form.Control
+                        type="text"
+                        placeholder="Tìm theo tên sự kiện..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{ minWidth: 260 }}
+                    />
+                    <Button variant="primary" onClick={() => setShowModal(true)}>
+                        Tạo Event mới
+                    </Button>
+                </div>
             </div>
 
             {error && <Alert variant="danger" onClose={() => setError('')} dismissible>{error}</Alert>}
@@ -190,7 +231,9 @@ const EventList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {events.map((event) => (
+                    {events
+                        .filter((event) => normalizedIncludes(event.title, searchTerm))
+                        .map((event) => (
                         <tr key={event.id}>
                             <td>{event.title}</td>
                             <td>{formatDateTime(event.startTime)}</td>
