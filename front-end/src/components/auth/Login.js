@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Alert, Button } from 'react-bootstrap';
 import { useEffect } from 'react';
 
+
 export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -85,6 +86,10 @@ export function Login() {
                 <div className='form-footer'>
                     <span>Bạn chưa có tài khoản? </span>
                     <a href="/register">Đăng ký ngay</a>
+                </div>
+                <div className='form-footer'>
+                    <span>Hay bạn đã quên pass? </span>
+                    <a href="/forgot-password">Quên mật khẩu</a>
                 </div>
             </form>
         </div>

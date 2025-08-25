@@ -91,7 +91,7 @@ exports.register = async (req, res) => {
             return res.status(400).json({ message: "Invalid email format" });
         }
         const phoneRegex = /^0\d{9}$/;
-        if(!phoneRegex.test(phone)){
+        if (!phoneRegex.test(phone)) {
             return res.status(400).json({ message: "Invalid phone format" });
         }
         // Kiểm tra email đã tồn tại
@@ -154,6 +154,134 @@ exports.register = async (req, res) => {
         });
     }
 }
+
+exports.forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        
+        console.log('Forgot password request for:', email);
+        
+        // Tìm user theo email
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ 
+                message: "Email không tồn tại trong hệ thống",
+                success: false 
+            });
+        }
+
+        // Tạo reset token
+        const resetToken = crypto.randomBytes(32).toString('hex');
+        const resetTokenExpiry = Date.now() + 3600000; // 1 giờ
+
+        // Lưu token vào database
+        user.resetToken = resetToken;
+        user.resetTokenExpiry = resetTokenExpiry;
+        await user.save();
+
+        console.log('Reset token generated for user:', user.email);
+
+        // Gửi email
+        const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password/${resetToken}`;
+        
+        const mailOptions = {
+            to: user.email,
+            from: process.env.EMAIL_USER,
+            subject: 'Đặt lại mật khẩu - Music App',
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h2 style="color: #333;">Yêu cầu đặt lại mật khẩu</h2>
+                    <p>Xin chào <strong>${user.name}</strong>,</p>
+                    <p>Bạn đã yêu cầu đặt lại mật khẩu cho tài khoản của mình. Nhấp vào nút bên dưới để đặt lại mật khẩu:</p>
+                    <div style="text-align: center; margin: 30px 0;">
+                        <a href="${resetUrl}" style="background-color: #667eea; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Đặt lại mật khẩu</a>
+                    </div>
+                    <p>Hoặc copy link này vào trình duyệt:</p>
+                    <p style="word-break: break-all; color: #666;">${resetUrl}</p>
+                    <p><strong>Lưu ý:</strong> Liên kết này sẽ hết hạn sau 1 giờ.</p>
+                    <p>Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này.</p>
+                    <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
+                    <p style="color: #999; font-size: 12px;">Email này được gửi tự động, vui lòng không trả lời.</p>
+                </div>
+            `
+        };
+
+        console.log('Attempting to send email to:', user.email);
+        
+        await transporter.sendMail(mailOptions);
+        
+        console.log('Email sent successfully to:', user.email);
+
+        res.json({ 
+            message: "Email đặt lại mật khẩu đã được gửi. Vui lòng kiểm tra hộp thư của bạn.",
+            success: true 
+        });
+
+    } catch (error) {
+        console.error('Forgot password error:', error);
+        res.status(500).json({ 
+            message: "Lỗi server khi xử lý yêu cầu", 
+            error: error.message,
+            success: false 
+        });
+    }
+};
+
+// Reset Password
+exports.resetPassword = async (req, res) => {
+    try {
+        const { token } = req.params;
+        const { password } = req.body;
+
+        console.log('Reset password attempt with token:', token);
+
+        // Tìm user với token hợp lệ và chưa hết hạn
+        const user = await User.findOne({
+            resetToken: token,
+            resetTokenExpiry: { $gt: Date.now() }
+        });
+
+        if (!user) {
+            return res.status(400).json({ 
+                message: "Token không hợp lệ hoặc đã hết hạn",
+                success: false 
+            });
+        }
+
+        // Validate password
+        if (!password || password.length < 6) {
+            return res.status(400).json({ 
+                message: "Mật khẩu phải có ít nhất 6 ký tự",
+                success: false 
+            });
+        }
+
+        // Hash password mới
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        // Cập nhật password và xóa reset token
+        user.password = hashedPassword;
+        user.resetToken = undefined;
+        user.resetTokenExpiry = undefined;
+        await user.save();
+
+        console.log('Password reset successfully for user:', user.email);
+
+        res.json({ 
+            message: "Mật khẩu đã được đặt lại thành công",
+            success: true 
+        });
+
+    } catch (error) {
+        console.error('Reset password error:', error);
+        res.status(500).json({ 
+            message: "Lỗi server khi đặt lại mật khẩu", 
+            error: error.message,
+            success: false 
+        });
+    }
+};
 
 exports.verifyEmail = async (req, res) => {
     try {

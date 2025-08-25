@@ -17,6 +17,8 @@ import EventList from './components/pages/EventList';
 import EventDetail from './components/pages/EventDetail';
 import RegistrationList from './components/pages/RegistrationList';
 import Statistics from "./components/pages/admin/Dashboard";
+import ForgotPassword from './components/auth/ForgotPassword';
+import ResetPassword from './components/auth/ResetPassword';
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
         <Route path="/user/:id" element={<UserDetail />} />
         <Route path="/statistics" element={<Statistics />} />
         <Route path="/my-events" element={<EventList />} />
+        <Route path="/forgot-password" element={<ForgotPassword/>}/>
+        <Route path="/reset-password/:token" element={<ResetPassword/>}/>
         <Route path="/admin/acc-manage" element={
           <PrivateRoute allowedRoles={['admin']}>
             <AdminDashboard />

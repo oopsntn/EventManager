@@ -18,4 +18,7 @@ router.get('/organizer', authenticateToken, checkRole(['organizer','admin'], (re
 router.get('/user', authenticateToken, checkRole(['user', 'organizer', 'admin']), (req,res) => {
     res.send('Hello User!');
 });
+
+router.post('/forgot-password', authController.forgotPassword);
+router.post('/reset-password/:token', authController.resetPassword);
 module.exports = router;

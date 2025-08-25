@@ -20,7 +20,6 @@ export const useSocket = (userId) => {
         newSocket.on('connect', () => {
             console.log('✅ Socket connected:', newSocket.id);
             setIsConnected(true);
-            // Đăng nhập user
             newSocket.emit('join_user', userId);
             console.log('👤 Joined user room:', userId);
         });

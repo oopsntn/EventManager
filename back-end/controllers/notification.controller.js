@@ -226,7 +226,7 @@ exports.createEventRegistrationNotification = async (req, userId, eventId, event
         const notification = new Notification({
             userId,
             eventId,
-            content: `Bạn đã đăng ký thành công sự kiện "${eventTitle}"`,
+            content: `Cảm ơn vì đã tham gia sự kiện "${eventTitle}", Người đâu thưởng bánh Danisa`,
             status: 'unread'
         });
 
@@ -244,5 +244,67 @@ exports.createEventRegistrationNotification = async (req, userId, eventId, event
         return notification;
     } catch (error) {
         console.error('Create event registration notification error: ', error);
+    }
+};
+
+exports.createEventCancellationNotification = async (req, userId, eventId, eventTitle) => {
+    try {
+        const notification = new Notification({
+            userId,
+            eventId,
+            content: `Chán tham gia sự kiện "${eventTitle}" rồi à mà đã hủy thế `,
+            status: 'unread'
+        });
+
+        await notification.save();
+        console.log(`💾 Cancellation notification saved to DB: ${notification._id}`);
+        
+        await notification.populate('eventId', 'title startTime location');
+
+        sendNotificationToUser(req, userId, {
+            id: notification._id,
+            content: notification.content,
+            eventId: notification.eventId,
+            status: notification.status,
+            createdAt: notification.createdAt
+        });
+
+        console.log(`📡 Cancellation notification sent to user ${userId}`);
+        return notification;
+    } catch (error) {
+        console.error('❌ Create event cancellation notification error: ', error);
+        throw error;
+    }
+};
+
+exports.createEventDeletedNotification = async (req, userId, eventId, eventTitle) => {
+    try {
+        console.log(`🔔 Creating event deleted notification for user ${userId}, event: ${eventTitle}`);
+        
+        const notification = new Notification({
+            userId,
+            eventId,
+            content: `Sự kiện "${eventTitle}" mà bạn đã đăng ký đã bị hủy bởi ban tổ chức`,
+            status: 'unread'
+        });
+
+        await notification.save();
+        console.log(`💾 Event deleted notification saved to DB: ${notification._id}`);
+        
+        await notification.populate('eventId', 'title startTime location');
+
+        sendNotificationToUser(req, userId, {
+            id: notification._id,
+            content: notification.content,
+            eventId: notification.eventId,
+            status: notification.status,
+            createdAt: notification.createdAt
+        });
+
+        console.log(`📡 Event deleted notification sent to user ${userId}`);
+        return notification;
+    } catch (error) {
+        console.error('❌ Create event deleted notification error: ', error);
+        throw error;
     }
 };
