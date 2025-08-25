@@ -17,7 +17,7 @@ function Header() {
         <Navbar bg="light" expand="lg">
             <Container>
                 
-                <Navbar.Brand as={Link} to="/">
+                <Navbar.Brand>
                     🎉 EventManager
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
