@@ -221,7 +221,7 @@ exports.deleteNotification = async (req, res) => {
     }
 };
 
-exports.creatEventRegistrationNotification = async (req, userId, eventId, eventTitle) => {
+exports.createEventRegistrationNotification = async (req, userId, eventId, eventTitle) => {
     try {
         const notification = new Notification({
             userId,

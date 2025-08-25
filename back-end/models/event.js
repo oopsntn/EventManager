@@ -6,15 +6,15 @@ const eventSchema = new mongoose.Schema({
   description: { type: String },
   startTime: { type: Date, required: true },
   endTime: { 
-  type: Date, 
-  required: true,
-  validate: {
-    validator: function(value) {
-      return value > this.startTime;
-    },
-    message: "End time must be after start time."
-  }
-},
+    type: Date, 
+    required: true,
+    validate: {
+      validator: function(value) {
+        return value > this.startTime;
+      },
+      message: "End time must be after start time."
+    }
+  },
   location: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   maxParticipant: { type: Number },
