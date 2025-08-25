@@ -25,6 +25,7 @@ const EventList = () => {
 
     const [events, setEvents] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -73,6 +74,14 @@ const EventList = () => {
         } catch (error) {
             console.error('Error fetching categories:', error);
         }
+    };
+
+    const normalizedIncludes = (source, query) => {
+        if (!query) return true;
+        const normalize = (s) => s
+            ? s.toString().normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase()
+            : '';
+        return normalize(source).includes(normalize(query));
     };
 
     const handleInputChange = (e) => {
@@ -194,9 +203,18 @@ const EventList = () => {
         <div className="container mt-4">
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <h2>Danh sách Events của tôi</h2>
-                <Button variant="primary" onClick={() => setShowModal(true)}>
-                    Tạo Event mới
-                </Button>
+                <div className="d-flex gap-2 align-items-center">
+                    <Form.Control
+                        type="text"
+                        placeholder="Tìm theo tên sự kiện..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{ minWidth: 260 }}
+                    />
+                    <Button variant="primary" onClick={() => setShowModal(true)}>
+                        Tạo Event mới
+                    </Button>
+                </div>
             </div>
 
             {error && <Alert variant="danger" onClose={() => setError('')} dismissible>{error}</Alert>}
@@ -213,7 +231,9 @@ const EventList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {events.map((event) => (
+                    {events
+                        .filter((event) => normalizedIncludes(event.title, searchTerm))
+                        .map((event) => (
                         <tr key={event.id}>
                             <td>{event.title}</td>
                             <td>{formatDateTime(event.startTime)}</td>
